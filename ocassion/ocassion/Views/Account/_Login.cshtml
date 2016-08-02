@@ -25,13 +25,8 @@
                 <p>Welcome, please enter the folling to continue.</p>
                 <p>If you have previously Login with us, <span>click here</span></p>
                 @{ Html.EnableClientValidation(); }
-
-                                @if (@ViewBag.Msg != null)
-                {
-                    <div style="color:red">
-                        @ViewBag.Msg
-                    </div>
-                }
+                
+                @ViewBag.msg
 
                 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                 {

@@ -39,11 +39,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net">
+      <HintPath>..\..\..\..\AMB\net\Root\AskMeBazaar\Lib\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -128,6 +133,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccessoriesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BrideMakeupAndMehendiController.cs" />
     <Compile Include="Controllers\CardsAndGiftsController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -139,12 +145,38 @@
     <Compile Include="Controllers\TentAndCroackariesController.cs" />
     <Compile Include="Controllers\TransportationController.cs" />
     <Compile Include="Controllers\VenuesController.cs" />
+    <Compile Include="DAL\ocassion.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ocassion.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ocassion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ocassion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\ocassion.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ocassion.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\User.cs">
+      <DependentUpon>ocassion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\UserDetail.cs">
+      <DependentUpon>ocassion.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\LoginVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\OSC.mdf" />
+    <Content Include="App_Data\OSC_log.ldf">
+      <DependentUpon>OSC.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -211,6 +243,23 @@
     <Content Include="Content\fonts\JosefinSans-Bold.ttf" />
     <Content Include="Content\fonts\JosefinSans-Light.ttf" />
     <Content Include="Content\fonts\JosefinSans-Regular.ttf" />
+    <EntityDeploy Include="DAL\ocassion.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>ocassion.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DAL\ocassion.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ocassion.edmx</DependentUpon>
+      <LastGenOutput>ocassion.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DAL\ocassion.edmx.diagram">
+      <DependentUpon>ocassion.edmx</DependentUpon>
+    </Content>
+    <Content Include="DAL\ocassion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>ocassion.edmx</DependentUpon>
+      <LastGenOutput>ocassion.cs</LastGenOutput>
+    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="images\a1.jpg" />
     <Content Include="images\a2.jpg" />
@@ -301,6 +350,9 @@
     <Content Include="Slider\themes\8\js-image-slider.js" />
     <Content Include="Slider\themes\8\tooltip.css" />
     <Content Include="Slider\themes\8\tooltip.js" />
+    <Content Include="Views\Account\Login.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -315,7 +367,6 @@
     <Content Include="Views\Home\Home.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Product\Product.cshtml" />
-    <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Home\Contactus.cshtml" />
     <Content Include="Views\Cart\CheckOut.cshtml" />
     <Content Include="Views\Accessories\Main.cshtml" />
@@ -329,11 +380,13 @@
     <Content Include="Views\Venues\Main.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BAL\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
