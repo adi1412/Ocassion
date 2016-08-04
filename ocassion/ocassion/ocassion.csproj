@@ -133,6 +133,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccessoriesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AreaDetailsController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\BrideMakeupAndMehendiController.cs" />
     <Compile Include="Controllers\CardsAndGiftsController.cs" />
@@ -145,6 +146,18 @@
     <Compile Include="Controllers\TentAndCroackariesController.cs" />
     <Compile Include="Controllers\TransportationController.cs" />
     <Compile Include="Controllers\VenuesController.cs" />
+    <Compile Include="DAL\Area.cs">
+      <DependentUpon>ocassion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\BanquetDetail.cs">
+      <DependentUpon>ocassion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\City.cs">
+      <DependentUpon>ocassion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\Country.cs">
+      <DependentUpon>ocassion.tt</DependentUpon>
+    </Compile>
     <Compile Include="DAL\ocassion.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -159,6 +172,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ocassion.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DAL\State.cs">
+      <DependentUpon>ocassion.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\User.cs">
       <DependentUpon>ocassion.tt</DependentUpon>
@@ -378,6 +394,11 @@
     <Content Include="Views\TentAndCroackaries\Main.cshtml" />
     <Content Include="Views\Transportation\Main.cshtml" />
     <Content Include="Views\Venues\Main.cshtml" />
+    <Content Include="Views\AreaDetails\Index.cshtml" />
+    <Content Include="Views\AreaDetails\Details.cshtml" />
+    <Content Include="Views\AreaDetails\Create.cshtml" />
+    <Content Include="Views\AreaDetails\Edit.cshtml" />
+    <Content Include="Views\AreaDetails\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

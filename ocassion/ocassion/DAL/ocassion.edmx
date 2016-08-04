@@ -4,7 +4,57 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OSCDBContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OSCDBContext.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AreaName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CityId" Type="int" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="BanquetDetails">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BanquetName" Type="nvarchar" MaxLength="200" />
+          <Property Name="AreaId" Type="int" />
+          <Property Name="CityId" Type="int" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="SearchCount" Type="bigint" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CityName" Type="nvarchar" MaxLength="50" />
+          <Property Name="StateId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CountryName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CountryId" Type="int" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserId" />
@@ -34,6 +84,114 @@
           <Property Name="MobileNumber" Type="varchar" MaxLength="20" />
           <Property Name="DOB" Type="datetime" />
         </EntityType>
+        <Association Name="FK__Area__CityId__2B3F6F97">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="Area" Type="Self.Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Area__CountryId__2D27B809">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="Area" Type="Self.Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Area__StateId__2C3393D0">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="Area" Type="Self.Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BanquetDe__AreaI__300424B4">
+          <End Role="Area" Type="Self.Area" Multiplicity="0..1" />
+          <End Role="BanquetDetails" Type="Self.BanquetDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BanquetDetails">
+              <PropertyRef Name="AreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BanquetDe__CityI__30F848ED">
+          <End Role="City" Type="Self.City" Multiplicity="0..1" />
+          <End Role="BanquetDetails" Type="Self.BanquetDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BanquetDetails">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BanquetDe__Count__32E0915F">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="BanquetDetails" Type="Self.BanquetDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BanquetDetails">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BanquetDe__State__31EC6D26">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="BanquetDetails" Type="Self.BanquetDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BanquetDetails">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__City__StateId__286302EC">
+          <End Role="State" Type="Self.State" Multiplicity="0..1" />
+          <End Role="City" Type="Self.City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__State__CountryId__25869641">
+          <End Role="Country" Type="Self.Country" Multiplicity="0..1" />
+          <End Role="State" Type="Self.State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_UserLogin_UserDetails">
           <End Role="UserDetail" Type="Self.UserDetail" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -47,15 +205,55 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="OSCDBContextStoreContainer">
+          <EntitySet Name="Area" EntityType="Self.Area" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BanquetDetails" EntityType="Self.BanquetDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country" EntityType="Self.Country" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="State" EntityType="Self.State" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserDetail" EntityType="Self.UserDetail" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Area__CityId__2B3F6F97" Association="Self.FK__Area__CityId__2B3F6F97">
+            <End Role="City" EntitySet="City" />
+            <End Role="Area" EntitySet="Area" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Area__CountryId__2D27B809" Association="Self.FK__Area__CountryId__2D27B809">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="Area" EntitySet="Area" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Area__StateId__2C3393D0" Association="Self.FK__Area__StateId__2C3393D0">
+            <End Role="State" EntitySet="State" />
+            <End Role="Area" EntitySet="Area" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BanquetDe__AreaI__300424B4" Association="Self.FK__BanquetDe__AreaI__300424B4">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="BanquetDetails" EntitySet="BanquetDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BanquetDe__CityI__30F848ED" Association="Self.FK__BanquetDe__CityI__30F848ED">
+            <End Role="City" EntitySet="City" />
+            <End Role="BanquetDetails" EntitySet="BanquetDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BanquetDe__Count__32E0915F" Association="Self.FK__BanquetDe__Count__32E0915F">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="BanquetDetails" EntitySet="BanquetDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BanquetDe__State__31EC6D26" Association="Self.FK__BanquetDe__State__31EC6D26">
+            <End Role="State" EntitySet="State" />
+            <End Role="BanquetDetails" EntitySet="BanquetDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__City__StateId__286302EC" Association="Self.FK__City__StateId__286302EC">
+            <End Role="State" EntitySet="State" />
+            <End Role="City" EntitySet="City" />
+          </AssociationSet>
+          <AssociationSet Name="FK__State__CountryId__25869641" Association="Self.FK__State__CountryId__25869641">
+            <End Role="Country" EntitySet="Country" />
+            <End Role="State" EntitySet="State" />
+          </AssociationSet>
           <AssociationSet Name="FK_UserLogin_UserDetails" Association="Self.FK_UserLogin_UserDetails">
             <End Role="UserDetail" EntitySet="UserDetail" />
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OSCDBContext" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -109,7 +307,224 @@
             <End Role="UserDetail" EntitySet="UserDetails" />
             <End Role="User" EntitySet="Users" />
           </AssociationSet>
+          <EntitySet Name="Areas" EntityType="OSCDBContext.Area" />
+          <EntitySet Name="BanquetDetails" EntityType="OSCDBContext.BanquetDetail" />
+          <EntitySet Name="Cities" EntityType="OSCDBContext.City" />
+          <EntitySet Name="Countries" EntityType="OSCDBContext.Country" />
+          <EntitySet Name="States" EntityType="OSCDBContext.State" />
+          <AssociationSet Name="FK__Area__CityId__2B3F6F97" Association="OSCDBContext.FK__Area__CityId__2B3F6F97">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="Area" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Area__CountryId__2D27B809" Association="OSCDBContext.FK__Area__CountryId__2D27B809">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="Area" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Area__StateId__2C3393D0" Association="OSCDBContext.FK__Area__StateId__2C3393D0">
+            <End Role="State" EntitySet="States" />
+            <End Role="Area" EntitySet="Areas" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BanquetDe__AreaI__300424B4" Association="OSCDBContext.FK__BanquetDe__AreaI__300424B4">
+            <End Role="Area" EntitySet="Areas" />
+            <End Role="BanquetDetail" EntitySet="BanquetDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BanquetDe__CityI__30F848ED" Association="OSCDBContext.FK__BanquetDe__CityI__30F848ED">
+            <End Role="City" EntitySet="Cities" />
+            <End Role="BanquetDetail" EntitySet="BanquetDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BanquetDe__Count__32E0915F" Association="OSCDBContext.FK__BanquetDe__Count__32E0915F">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="BanquetDetail" EntitySet="BanquetDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__BanquetDe__State__31EC6D26" Association="OSCDBContext.FK__BanquetDe__State__31EC6D26">
+            <End Role="State" EntitySet="States" />
+            <End Role="BanquetDetail" EntitySet="BanquetDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__City__StateId__286302EC" Association="OSCDBContext.FK__City__StateId__286302EC">
+            <End Role="State" EntitySet="States" />
+            <End Role="City" EntitySet="Cities" />
+          </AssociationSet>
+          <AssociationSet Name="FK__State__CountryId__25869641" Association="OSCDBContext.FK__State__CountryId__25869641">
+            <End Role="Country" EntitySet="Countries" />
+            <End Role="State" EntitySet="States" />
+          </AssociationSet>
         </EntityContainer>
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AreaName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="City" Relationship="OSCDBContext.FK__Area__CityId__2B3F6F97" FromRole="Area" ToRole="City" />
+          <NavigationProperty Name="Country" Relationship="OSCDBContext.FK__Area__CountryId__2D27B809" FromRole="Area" ToRole="Country" />
+          <NavigationProperty Name="State" Relationship="OSCDBContext.FK__Area__StateId__2C3393D0" FromRole="Area" ToRole="State" />
+          <NavigationProperty Name="BanquetDetails" Relationship="OSCDBContext.FK__BanquetDe__AreaI__300424B4" FromRole="Area" ToRole="BanquetDetail" />
+        </EntityType>
+        <EntityType Name="BanquetDetail">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BanquetName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="AreaId" Type="Int32" />
+          <Property Name="CityId" Type="Int32" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="SearchCount" Type="Int64" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Area" Relationship="OSCDBContext.FK__BanquetDe__AreaI__300424B4" FromRole="BanquetDetail" ToRole="Area" />
+          <NavigationProperty Name="City" Relationship="OSCDBContext.FK__BanquetDe__CityI__30F848ED" FromRole="BanquetDetail" ToRole="City" />
+          <NavigationProperty Name="Country" Relationship="OSCDBContext.FK__BanquetDe__Count__32E0915F" FromRole="BanquetDetail" ToRole="Country" />
+          <NavigationProperty Name="State" Relationship="OSCDBContext.FK__BanquetDe__State__31EC6D26" FromRole="BanquetDetail" ToRole="State" />
+        </EntityType>
+        <EntityType Name="City">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CityName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="StateId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Areas" Relationship="OSCDBContext.FK__Area__CityId__2B3F6F97" FromRole="City" ToRole="Area" />
+          <NavigationProperty Name="BanquetDetails" Relationship="OSCDBContext.FK__BanquetDe__CityI__30F848ED" FromRole="City" ToRole="BanquetDetail" />
+          <NavigationProperty Name="State" Relationship="OSCDBContext.FK__City__StateId__286302EC" FromRole="City" ToRole="State" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CountryName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Areas" Relationship="OSCDBContext.FK__Area__CountryId__2D27B809" FromRole="Country" ToRole="Area" />
+          <NavigationProperty Name="BanquetDetails" Relationship="OSCDBContext.FK__BanquetDe__Count__32E0915F" FromRole="Country" ToRole="BanquetDetail" />
+          <NavigationProperty Name="States" Relationship="OSCDBContext.FK__State__CountryId__25869641" FromRole="Country" ToRole="State" />
+        </EntityType>
+        <EntityType Name="State">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CountryId" Type="Int32" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="Areas" Relationship="OSCDBContext.FK__Area__StateId__2C3393D0" FromRole="State" ToRole="Area" />
+          <NavigationProperty Name="BanquetDetails" Relationship="OSCDBContext.FK__BanquetDe__State__31EC6D26" FromRole="State" ToRole="BanquetDetail" />
+          <NavigationProperty Name="Cities" Relationship="OSCDBContext.FK__City__StateId__286302EC" FromRole="State" ToRole="City" />
+          <NavigationProperty Name="Country" Relationship="OSCDBContext.FK__State__CountryId__25869641" FromRole="State" ToRole="Country" />
+        </EntityType>
+        <Association Name="FK__Area__CityId__2B3F6F97">
+          <End Type="OSCDBContext.City" Role="City" Multiplicity="0..1" />
+          <End Type="OSCDBContext.Area" Role="Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Area__CountryId__2D27B809">
+          <End Type="OSCDBContext.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="OSCDBContext.Area" Role="Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Area__StateId__2C3393D0">
+          <End Type="OSCDBContext.State" Role="State" Multiplicity="0..1" />
+          <End Type="OSCDBContext.Area" Role="Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BanquetDe__AreaI__300424B4">
+          <End Type="OSCDBContext.Area" Role="Area" Multiplicity="0..1" />
+          <End Type="OSCDBContext.BanquetDetail" Role="BanquetDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BanquetDetail">
+              <PropertyRef Name="AreaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BanquetDe__CityI__30F848ED">
+          <End Type="OSCDBContext.City" Role="City" Multiplicity="0..1" />
+          <End Type="OSCDBContext.BanquetDetail" Role="BanquetDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="City">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BanquetDetail">
+              <PropertyRef Name="CityId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BanquetDe__Count__32E0915F">
+          <End Type="OSCDBContext.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="OSCDBContext.BanquetDetail" Role="BanquetDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BanquetDetail">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__BanquetDe__State__31EC6D26">
+          <End Type="OSCDBContext.State" Role="State" Multiplicity="0..1" />
+          <End Type="OSCDBContext.BanquetDetail" Role="BanquetDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BanquetDetail">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__City__StateId__286302EC">
+          <End Type="OSCDBContext.State" Role="State" Multiplicity="0..1" />
+          <End Type="OSCDBContext.City" Role="City" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="State">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="City">
+              <PropertyRef Name="StateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__State__CountryId__25869641">
+          <End Type="OSCDBContext.Country" Role="Country" Multiplicity="0..1" />
+          <End Type="OSCDBContext.State" Role="State" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="State">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -144,6 +559,61 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="DOB" ColumnName="DOB" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Areas">
+            <EntityTypeMapping TypeName="OSCDBContext.Area">
+              <MappingFragment StoreEntitySet="Area">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="AreaName" ColumnName="AreaName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BanquetDetails">
+            <EntityTypeMapping TypeName="OSCDBContext.BanquetDetail">
+              <MappingFragment StoreEntitySet="BanquetDetails">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="SearchCount" ColumnName="SearchCount" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityId" ColumnName="CityId" />
+                <ScalarProperty Name="AreaId" ColumnName="AreaId" />
+                <ScalarProperty Name="BanquetName" ColumnName="BanquetName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Cities">
+            <EntityTypeMapping TypeName="OSCDBContext.City">
+              <MappingFragment StoreEntitySet="City">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="OSCDBContext.Country">
+              <MappingFragment StoreEntitySet="Country">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CountryName" ColumnName="CountryName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="States">
+            <EntityTypeMapping TypeName="OSCDBContext.State">
+              <MappingFragment StoreEntitySet="State">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

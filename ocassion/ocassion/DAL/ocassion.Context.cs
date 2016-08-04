@@ -27,5 +27,10 @@ namespace ocassion.DAL
     
         public DbSet<User> Users { get; set; }
         public DbSet<UserDetail> UserDetails { get; set; }
+        public DbSet<Area> Areas { get; set; }
+        public DbSet<BanquetDetail> BanquetDetails { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<State> States { get; set; }
     }
 }

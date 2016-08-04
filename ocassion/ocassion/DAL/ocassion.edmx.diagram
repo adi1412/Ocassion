@@ -8,6 +8,20 @@
         <EntityTypeShape EntityType="OSCDBContext.User" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="OSCDBContext.UserDetail" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
         <AssociationConnector Association="OSCDBContext.FK_UserLogin_UserDetails" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OSCDBContext.Area" Width="1.5" PointX="12.125" PointY="5" />
+        <EntityTypeShape EntityType="OSCDBContext.BanquetDetail" Width="1.5" PointX="14.375" PointY="4.75" />
+        <EntityTypeShape EntityType="OSCDBContext.City" Width="1.5" PointX="9.875" PointY="7" />
+        <EntityTypeShape EntityType="OSCDBContext.Country" Width="1.5" PointX="5.375" PointY="3.375" />
+        <EntityTypeShape EntityType="OSCDBContext.State" Width="1.5" PointX="7.625" PointY="6.875" />
+        <AssociationConnector Association="OSCDBContext.FK__Area__CityId__2B3F6F97" />
+        <AssociationConnector Association="OSCDBContext.FK__Area__CountryId__2D27B809" />
+        <AssociationConnector Association="OSCDBContext.FK__Area__StateId__2C3393D0" />
+        <AssociationConnector Association="OSCDBContext.FK__BanquetDe__AreaI__300424B4" />
+        <AssociationConnector Association="OSCDBContext.FK__BanquetDe__CityI__30F848ED" />
+        <AssociationConnector Association="OSCDBContext.FK__BanquetDe__Count__32E0915F" />
+        <AssociationConnector Association="OSCDBContext.FK__BanquetDe__State__31EC6D26" />
+        <AssociationConnector Association="OSCDBContext.FK__City__StateId__286302EC" />
+        <AssociationConnector Association="OSCDBContext.FK__State__CountryId__25869641" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
